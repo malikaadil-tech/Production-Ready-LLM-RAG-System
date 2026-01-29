@@ -1,154 +1,95 @@
-# THIS PROJECT IS ARCHIVED   
-Intel will not provide or guarantee development of or support for this project, including but not limited to, maintenance, bug fixes, new releases or updates.  
-Patches to this project are no longer accepted by Intel.  
- If you have an ongoing need to use this project, are interested in independently developing it, or would like to maintain patches for the community, please create your own fork of the project.  
-  
-<div align="center">
-    <img src="assets/fastrag_header.png" width="300"/>
+# Production-Ready LLM RAG System  
+### Research-to-MVP AI Engineering Project
+
+## Overview
+
+This project is a **production-oriented Retrieval-Augmented Generation (RAG) system** designed to bridge the gap between **AI research prototypes and deployable, real-world AI services**.
+
+The primary goal of this project is to explore how **large language models (LLMs)** can be structured, optimized, and deployed as **scalable AI MVPs**, following industry-grade software engineering practices.
+
+The system focuses on **efficient document retrieval, modular NLP pipelines, and API-based deployment**, aligning closely with how AI solutions are built and shipped in applied research and product engineering teams.
 
 ---
 
-<h4 align="center">
-    <p>Build and explore efficient retrieval-augmented generative models and applications</p>
-</h4>
+## Key Objectives
 
-![PyPI - Version](https://img.shields.io/pypi/v/fastrag)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/fastrag)
+- Convert **research-style LLM pipelines** into **production-ready AI services**
+- Design **modular and extensible RAG architectures**
+- Apply **system-level thinking** to AI model deployment
+- Emphasize **engineering reliability over experimentation**
 
-:round_pushpin: <a href="#round_pushpin-installation">Installation</a> • :rocket: <a href="components.md">Components</a> • :books: <a href="examples.md">Examples</a> • :red_car: <a href="getting_started.md">Getting Started</a> • :pill: <a href="Demo.md">Demos</a> • :pencil2: <a href="scripts/README.md">Scripts</a> • :bar_chart: <a href="benchmarks/README.md">Benchmarks</a>
+---
 
-</div>
+## System Architecture
 
-fast**RAG** is a research framework for ***efficient*** and ***optimized*** retrieval augmented generative pipelines,
-incorporating state-of-the-art LLMs and Information Retrieval. fastRAG is designed to empower researchers and developers
-with a comprehensive tool-set for advancing retrieval augmented generation.
+The project follows a clean, modular pipeline:
 
-Comments, suggestions, issues and pull-requests are welcomed! :heart:
+1. **Document Ingestion**
+   - Structured ingestion of unstructured text documents  
+   - Chunking and preprocessing for efficient retrieval  
 
-> [!IMPORTANT]
-> Now compatible with Haystack v2+. Please report any possible issues you find.
+2. **Vector-Based Retrieval**
+   - Dense embedding generation  
+   - Similarity search using a vector database  
 
-## :mega: Updates
+3. **LLM-Based Generation**
+   - Context-aware response generation using retrieved documents  
+   - Prompt construction optimized for factual grounding  
 
-- **2024-05**: fastRAG V3 is Haystack 2.0 compatible :fire:
-- **2023-12**: Gaudi2 and ONNX runtime support; Optimized Embedding models; Multi-modality and Chat demos; [REPLUG](https://arxiv.org/abs/2301.12652) text generation.
-- **2023-06**: ColBERT index modification: adding/removing documents; see [IndexUpdater](libs/colbert/colbert/index_updater.py).
-- **2023-05**: [RAG with LLM and dynamic prompt synthesis example](examples/rag-prompt-hf.ipynb).
-- **2023-04**: Qdrant `DocumentStore` support.
+4. **Inference API Layer**
+   - REST-based inference using FastAPI  
+   - Stateless, container-friendly design  
+
+5. **Deployment-Ready Packaging**
+   - Dockerized service  
+   - Configurable for cloud or on-prem environments  
+
+---
+
+## Technology Stack
+
+- **Programming Language:** Python  
+- **Deep Learning Framework:** PyTorch  
+- **LLM & NLP:** Hugging Face Transformers  
+- **Retrieval & Indexing:** FAISS / Vector Databases  
+- **API Framework:** FastAPI  
+- **Deployment:** Docker  
+- **Development Style:** Modular, MVP-focused engineering  
+
+---
 
 ## Key Features
 
-- **Optimized RAG**: Build RAG pipelines with SOTA efficient components for greater compute efficiency.
-- **Optimized for Intel Hardware**: Leverage [Intel extensions for PyTorch (IPEX)](https://github.com/intel/intel-extension-for-pytorch), [🤗 Optimum Intel](https://github.com/huggingface/optimum-intel) and [🤗 Optimum-Habana](https://github.com/huggingface/optimum-habana) for *running as optimal as possible* on Intel® Xeon® Processors and Intel® Gaudi® AI accelerators.
-- **Customizable**: fastRAG is built using [Haystack](https://github.com/deepset-ai/haystack) and HuggingFace. All of fastRAG's components are 100% Haystack compatible.
+- End-to-end **Retrieval-Augmented Generation (RAG)** pipeline  
+- Modular separation of ingestion, retrieval, and generation layers  
+- Optimized inference workflow suitable for production usage  
+- Clean API interface for easy system integration  
+- Designed with **scalability and maintainability** in mind  
 
-## :rocket: Components
+---
 
-For a brief overview of the various unique components in fastRAG refer to the [Components Overview](components.md) page.
+## Why This Project Matters
 
-<div class="tg-wrap" align="center">
-<table style="undefined;table-layout: fixed; width: 600px; text-align: center;">
-<colgroup>
-<!-- <col style="width: 229px"> -->
-<!-- <col style="width: 238px"> -->
-</colgroup>
-<tbody>
-  <tr>
-    <td colspan="2"><strong><em>LLM Backends</em></td>
-  </tr>
-  <tr>
-    <td><a href="components.md#fastrag-running-llms-with-habana-gaudi-(dl1)-and-gaudi-2">Intel Gaudi Accelerators</a></td>
-    <td><em>Running LLMs on Gaudi 2</td>
-  </tr>
-  <tr>
-    <td><a href="components.md#fastrag-running-llms-with-onnx-runtime">ONNX Runtime</a></td>
-    <td><em>Running LLMs with optimized ONNX-runtime</td>
-  </tr>
-  <tr>
-    <td><a href="components.md#fastrag-running-quantized-llms-using-openvino">OpenVINO</a></td>
-    <td><em>Running quantized LLMs using OpenVINO</td>
-  </tr>
-  <tr>
-    <td><a href="components.md#fastrag-running-rag-pipelines-with-llms-on-a-llama-cpp-backend">Llama-CPP</a></td>
-    <td><em>Running RAG Pipelines with LLMs on a Llama CPP backend</td>
-  </tr>
-  <tr>
-    <td colspan="2"><strong><em>Optimized Components</em></td>
-  </tr>
-  <tr>
-    <td><a href="scripts/optimizations/embedders/README.md">Embedders</a></td>
-    <td>Optimized int8 bi-encoders</td>
-  </tr>
-  <tr>
-    <td><a href="scripts/optimizations/reranker_quantization/quantization.md">Rankers</a></td>
-    <td>Optimized/sparse cross-encoders</td>
-  </tr>
-  <tr>
-    <td colspan="2"><strong><em>RAG-efficient Components</em></td>
-  </tr>
-  <tr>
-    <td><a href="components.md#ColBERT-v2-with-PLAID-Engine">ColBERT</a></td>
-    <td>Token-based late interaction</td>
-  </tr>
-  <tr>
-    <td><a href="components.md#Fusion-In-Decoder">Fusion-in-Decoder (FiD)</a></td>
-    <td>Generative multi-document encoder-decoder</td>
-  </tr>
-  <tr>
-    <td><a href="components.md#REPLUG">REPLUG</a></td>
-    <td>Improved multi-document decoder</td>
-  </tr>
-  <tr>
-    <td><a href="components.md#ColBERT-v2-with-PLAID-Engine">PLAID</a></td>
-    <td>Incredibly efficient indexing engine</td>
-  </tr>
-</tbody>
-</table></div>
+Modern AI systems are not evaluated only on model accuracy, but on:
 
-## :round_pushpin: Installation
+- How easily they can be deployed  
+- How efficiently they scale  
+- How well they integrate with real products  
 
-Preliminary requirements:
+This project emphasizes **AI systems engineering**, not just model training.  
+It reflects how AI solutions are actually built inside **research labs transitioning ideas into MVPs and customer-ready products**.
 
-- **Python** 3.8 or higher.
-- **PyTorch** 2.0 or higher.
+---
 
-To set up the software, install from `pip` or clone the project for the bleeding-edge updates. Run the following, preferably in a newly created virtual environment:
+## Use Cases
 
-```bash
-pip install fastrag
-```
+- Enterprise document question answering  
+- Internal knowledge assistants  
+- Research-to-production AI prototyping  
+- AI MVP development for applied research teams  
 
-### Extra Packages
+---
 
-There are additional dependencies that you can install based on your specific usage of fastRAG:
+## Project Motivation
 
-```bash
-# Additional engines/components
-pip install fastrag[intel]               # Intel optimized backend [Optimum-intel, IPEX]
-pip install fastrag[openvino]            # Intel optimized backend using OpenVINO
-pip install fastrag[elastic]             # Support for ElasticSearch store
-pip install fastrag[qdrant]              # Support for Qdrant store
-pip install fastrag[colbert]             # Support for ColBERT+PLAID; requires FAISS
-pip install fastrag[faiss-cpu]           # CPU-based Faiss library
-pip install fastrag[faiss-gpu]           # GPU-based Faiss library
-```
-
-To work with the latest version of fastRAG, you can install it using the following command:
-
-```bash
-pip install .
-```
-
-### Development tools
-
-```bash
-pip install .[dev]
-```
-
-## License
-
-The code is licensed under the [Apache 2.0 License](LICENSE).
-
-## Disclaimer
-
-This is not an official Intel product.
+The motivation behind this project was to gain hands-on experience
